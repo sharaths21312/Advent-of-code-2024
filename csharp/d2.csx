@@ -5,10 +5,9 @@ using System.Text.RegularExpressions;
 List<List<int>> numbers = [];
 
 using (var file = new StreamReader("./inputs/day2.txt")) {
-    string line = "";
     while (!file.EndOfStream) {
-        numbers.Add(Regex.Matches(file.ReadLine(), @"\d+")
-            .Select(m => int.Parse(m.Value)).ToList()
+        numbers.Add(file.ReadLine().Split()
+            .Select(m => int.Parse(m)).ToList()
         );
     }
 }
