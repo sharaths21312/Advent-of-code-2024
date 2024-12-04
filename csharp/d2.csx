@@ -1,5 +1,4 @@
 using System.IO;
-using System.IO.IsolatedStorage;
 using System.Text.RegularExpressions;
 
 List<List<int>> numbers = [];
@@ -12,9 +11,8 @@ using (var file = new StreamReader("./inputs/day2.txt")) {
     }
 }
 
-Console.WriteLine(numbers.Count(line => IsSafe(line)));
-
-Console.WriteLine(numbers.Count(line => IsSafe2(line)));
+Console.WriteLine(numbers.Count(IsSafe));
+Console.WriteLine(numbers.Count(IsSafe2));
 
 bool IsSafe(List<int> numbers) {
     var isPos = (numbers[0] - numbers[1]) > 0;

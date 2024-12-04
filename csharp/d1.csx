@@ -1,6 +1,5 @@
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Timers;
 
 string filedata = "";
 List<int> firstcol = [];
@@ -10,6 +9,8 @@ using (var filehandle = new StreamReader("./inputs/day1.txt"))
 {
     filedata = filehandle.ReadToEnd().Trim();
 }
+
+Run();
 
 void Run() {
     firstcol = [];
@@ -27,8 +28,3 @@ void Run() {
     var sumprod = firstcol.Select(x => x * secondcol.Where(y => x == y).Count()).Sum();
     Console.WriteLine($"Part 2: {sumprod}");
 }
-var t = DateTime.Now;
-for (int i = 0; i < 10_000; i++) {
-    Run();
-}
-Console.WriteLine((DateTime.Now - t).TotalMicroseconds);

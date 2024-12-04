@@ -20,7 +20,7 @@ foreach (var (line, ypos) in filetext.Split("\n").Select((str, ind) => (str.Trim
 
 Console.WriteLine(LoopReturn());
 Console.WriteLine(DoesMapXmas2());
-Console.ReadKey();
+
 int LoopReturn() {
     int count = 0;
 
@@ -68,12 +68,12 @@ int MatchX_Mas(int xpos, int ypos) {
     char bl = mft[(xpos - 1, ypos + 1)];
     char br = mft[(xpos + 1, ypos + 1)];
     return (tl, tr, bl, br) switch {
-        ('M', 'M', 'S', 'S') => true,
-        ('S', 'M', 'S', 'M') => true,
-        ('S', 'S', 'M', 'M') => true,
-        ('M', 'S', 'M', 'S') => true,
-        _ => false,
-    } ? 1 : 0; 
+        ('M', 'M', 'S', 'S') => 1,
+        ('S', 'M', 'S', 'M') => 1,
+        ('S', 'S', 'M', 'M') => 1,
+        ('M', 'S', 'M', 'S') => 1,
+        _ => 0,
+    };
 }
 
 bool MatchUp(int xpos, int ypos) {
