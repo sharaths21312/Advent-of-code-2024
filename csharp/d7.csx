@@ -1,5 +1,4 @@
 using System.IO;
-using System.Numerics;
 
 string[] filetext = [];
 List<(long, int[])> Operations = [];
@@ -40,7 +39,7 @@ bool Evaluate(long target, Span<int> nums, long acc) {
             _ => acc
         };
 
-        if (Evaluate(target, nums.Slice(1), next)) return true;
+        if (Evaluate(target, nums[1..], next)) return true;
     }
 
     return false;
@@ -56,7 +55,7 @@ bool Evaluate2(long target, Span<int> nums, long acc) {
             _ => long.Parse(String.Concat(acc.ToString(), nums[0].ToString()))
         };
 
-        if (Evaluate2(target, nums.Slice(1), next)) return true;
+        if (Evaluate2(target, nums[1..], next)) return true;
     }
 
     return false;
