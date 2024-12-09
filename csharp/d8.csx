@@ -41,7 +41,7 @@ foreach (var (type, ps) in antenna) {
 Console.WriteLine(antinodes.Count);
 
 foreach (var (type, ps) in antenna) {
-    int xdiff, ydiff, xstep, ystep, gcd, backwards, forwards;
+    int xdiff, ydiff, xstep, ystep, gcd;
     (int, int) postest;
     if (ps.Count == 0) continue;
     for (int i = 0; i < ps.Count; i++) {
