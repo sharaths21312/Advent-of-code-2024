@@ -17,24 +17,37 @@ void Checksum() {
         }
     }
     int head = sorted.FindIndex(v => v == -1);
-
-    while (head != -1 && head < sorted.Count) {
-        if (sorted[^1] == -1) {
-            sorted.RemoveAt(sorted.Count -1);
+    var datarr = sorted.ToArray();
+    var slice = datarr.AsSpan(head);
+    
+    while (slice.Length >= 1) {
+        if (slice[0] == -1 && slice[^1] != -1) {
+            slice[0] = slice[^1];
+            slice[^1] = -1;
+            slice = slice[1..^1];
             continue;
         }
-        sorted[head] = sorted[^1];
-        sorted.RemoveAt(sorted.Count -1);
-        head = sorted.FindIndex(v => v == -1);
+        if (slice[0] != -1) {
+            slice = slice[1..];
+            continue;
+        }
+        if (slice[^1] == -1) {
+            slice = slice[..^1];
+            continue;
+        }
     }
+
+
     long checksum = 0;
 
-    foreach (var (idx, val) in sorted.Index()) {
+    foreach (var (idx, val) in datarr.Index()) {
+        if (val == -1) break;
         checksum += idx * val;
     }
     
     Console.WriteLine(checksum);
 }
+
 
 void Checksum2() {
     List<int> inls = [];
@@ -61,9 +74,8 @@ void Checksum2() {
 
         var datablk = dataarr.AsSpan(freespace.Index, file.Length);
         var fileblk = dataarr.AsSpan(file.Index, file.Length);
-        var fileval = file.Value;
         fileblk.Fill(-1);
-        datablk.Fill(fileval);
+        datablk.Fill(file.Value);
 
         if (freespace.Length == file.Length) {
             free.Remove(freespace);
