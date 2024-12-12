@@ -2,6 +2,7 @@ open System
 open System.Linq
 
 let split (s1:string) (s2:string):list<string> = List.ofArray <| s2.Split(s1, StringSplitOptions.RemoveEmptyEntries)
+let strjoin (sep: string) (ls: string seq) = String.Join(sep, ls) 
 let exceptidx (idx:int) (ls:list<'a>) = 
     match idx with
     | 0 -> List.tail ls

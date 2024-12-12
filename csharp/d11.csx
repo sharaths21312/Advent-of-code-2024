@@ -1,14 +1,7 @@
+#load "utils.csx"
 using System.IO;
 
 List<long> stonesin = [];
-
-public static void AddNum(this Dictionary<long, long> dict, long key, long val) {
-    if (dict.ContainsKey(key)) {
-        dict[key] += val;
-    } else {
-        dict[key] = val;
-    }
-}
 
 using (var file = new StreamReader("./inputs/day11.txt")) {
     stonesin = file.ReadToEnd().Trim()
