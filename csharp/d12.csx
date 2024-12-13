@@ -2,7 +2,6 @@
 using System.IO;
 
 Dictionary<Point, char> farm = [];
-var ss = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
 
 using (var file = new StreamReader("./inputs/day12.txt")) {
     foreach (var (y, line) in file.ReadToEnd().Split("\n", ss).Index()) {
@@ -34,9 +33,6 @@ Console.WriteLine(discountedprice);
 // 4 possible corners:
 // upleft => left and up in region and upleft not in region, or left and up not in region
 // (l & u & !ul) | (!l & !u)
-// upright => right and up in region and upright not in region, or right and up not in region
-// downleft => ...
-// downright => ...
 int CountCorners(Region region) {
     int count = 0;
 
@@ -80,10 +76,10 @@ bool Check(char chr, Point point) {
 record Region (char Chr, HashSet<Point> Points){
     public long Area {get => Points.Count;}
     public long Perimiter {get => GetPerimiter();}
-    public int MinX { get => Points.Min(p => p.x); }
-    public int MaxX { get => Points.Max(p => p.x); }
-    public int MinY { get => Points.Min(p => p.y); }
-    public int MaxY { get => Points.Max(p => p.y); }
+    public int MinX { get => Points.Min(p => p.X); }
+    public int MaxX { get => Points.Max(p => p.X); }
+    public int MinY { get => Points.Min(p => p.Y); }
+    public int MaxY { get => Points.Max(p => p.Y); }
 
     long GetPerimiter () {
         long pm = 0;
