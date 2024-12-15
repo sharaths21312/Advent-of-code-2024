@@ -9,6 +9,17 @@ where Tnum: INumber<Tnum> {
     }
 }
 
+Dictionary<T, Tnum> CountDict<T, Tnum>(IEnumerable<T> values, Tnum one)
+where Tnum: INumber<Tnum>{
+    var d = new Dictionary<T, Tnum>();
+
+    foreach (var item in values) {
+        d.AddNum(item, one);
+    }
+
+    return d;
+}
+
 public static void AddToValList<Tkey, Tlist>(this Dictionary<Tkey, List<Tlist>> dict, Tkey key, Tlist item) {
     if (dict.ContainsKey(key)) {
         dict[key].Add(item);
@@ -47,8 +58,11 @@ record Point(int X, int Y)
         => new(p.X + dir.Item1, p.Y + dir.Item2);
     public static Point operator +(Point p, Point dir)
         => new(p.X + dir.X, p.Y + dir.Y);
+    public static Point operator -(Point p, Point dir)
+        => new(p.X - dir.X, p.Y - dir.Y);
     public static Point operator *(Point p, int count)
         => new(p.X * count, p.Y * count);
+    public static Point operator -(Point p) => new(-p.X, -p.Y);
 
     public Point Up {get => this + (0, -1);}
     public Point Down {get => this + (0, 1);}
