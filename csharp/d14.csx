@@ -64,9 +64,6 @@ Point Move100(Robot robot) {
     return new(xfinal, yfinal);
 }
 
-int PosMod (int num, int div) {
-    return num < 0 ? (num%div) + div : (num%div);
-}
 
 int CountInLine(Robot r, List<Robot> robots) {
     return robots.Count(r2 => r2.x == r.x && Math.Abs(r.y - r2.y) < 40);

@@ -64,17 +64,37 @@ record Point(int X, int Y)
         => new(p.X * count, p.Y * count);
     public static Point operator -(Point p) => new(-p.X, -p.Y);
 
-    public Point Up {get => this + (0, -1);}
-    public Point Down {get => this + (0, 1);}
-    public Point Left {get => this + (-1, 0);}
-    public Point Right {get => this + (1, 0);}
-    public Point UpLeft {get => this + (-1, -1);}
-    public Point DownRight {get => this + (1, 1);}
-    public Point DownLeft {get => this + (-1, 1);}
-    public Point UpRight {get => this + (1, -1);}
+    public Point Up { get => this + (0, -1); }
+    public Point Down { get => this + (0, 1); }
+    public Point Left { get => this + (-1, 0); }
+    public Point Right { get => this + (1, 0); }
+    public Point UpLeft { get => this + (-1, -1); }
+    public Point DownRight { get => this + (1, 1); }
+    public Point DownLeft { get => this + (-1, 1); }
+    public Point UpRight { get => this + (1, -1); }
+    public Point TurnCW { get => new(-Y, X); }
+    public Point TurnACW { get => new(Y, -X); }
 
     public static implicit operator Point((int, int) tup) => new(tup.Item1, tup.Item2);
     public static implicit operator (int, int)(Point p) => (p.X, p.Y);
+
+    public override string ToString() => $"X: {X}, Y: {Y}";
+}
+
+static class Directions {
+    public static Point UP = new(0, -1);
+    public static Point DOWN = new(0, 1);
+    public static Point LEFT = new(-1, 0);
+    public static Point RIGHT = new(1, 0);
+}
+
+int PosMod (int num, int div) {
+    return num < 0 ? (num%div) + div : (num%div);
+}
+
+
+long PosMod (long num, long div) {
+    return num < 0 ? (num%div) + div : (num%div);
 }
 
 var ss = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;

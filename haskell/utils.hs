@@ -13,6 +13,9 @@ textIntoCoords txt = M.fromList $ zip coords (concat $ lines str)
         leny = length $ lines str
         coords = [(toInteger x, toInteger y) | x <- [0..lenx-1], y <- [0..leny-1]]
 
+splitText :: TextLike t => String -> t -> [String]
+splitText sep txt = map T.unpack $ T.splitOn (toText sep) (toText txt)
+
 matchListMap :: (Ord k, Eq a) => M.Map k a -> [k] -> [a] -> Bool
 matchListMap _ [] [] = True
 matchListMap mp (k:ks) (v:vs) =

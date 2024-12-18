@@ -3,8 +3,6 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as IO
 import qualified Data.Map.Strict as M
 import qualified Data.Vector as V
-import Text.Printf
-import Utils
 
 countxmas :: M.Map (Integer, Integer) Char -> [((Integer, Integer), Char)] -> Int
 countxmas _ [] = 0
