@@ -121,9 +121,6 @@ long lastN (long inp, int n) {
     return inp % pow2(n);
 }
 
-
-
-
 List<long> OptimiseRec(int[] instructions, long cval, int idx) {
     // 2,4,1,3,7,5,1,5,0,3,4,2,5,5,3,0
     if (idx > instructions.Length) return [];

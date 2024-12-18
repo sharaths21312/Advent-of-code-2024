@@ -16,18 +16,22 @@ Dictionary<char, int> perimiters = [];
 List<Region> regions = [];
 
 var validPoints = farm.Keys.ToHashSet();
+var t = DateTime.Now;
 
 while (validPoints.Count > 0) {
     var p = validPoints.FirstOrDefault();
     regions.Add(new Region(farm[p], GenerateRegion(p)));
 }
 var price = regions.Sum(r => r.Area * r.Perimiter);
-Console.WriteLine(price);
+WriteLine(price);
+WriteLine(GetMsTime(t));
+t = DateTime.Now;
 long discountedprice = 0;
 foreach (var region in regions) {
     discountedprice += region.Area * CountCorners(region);
 }
-Console.WriteLine(discountedprice);
+WriteLine(discountedprice);
+WriteLine(GetMsTime(t));
 
 // The number of edges in a region equals the number of corners
 // 4 possible corners:

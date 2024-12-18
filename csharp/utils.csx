@@ -9,6 +9,8 @@ where Tnum: INumber<Tnum> {
     }
 }
 
+double GetMsTime(DateTime t) => DateTime.Now.Subtract(t).TotalMilliseconds;
+
 Dictionary<T, Tnum> CountDict<T, Tnum>(IEnumerable<T> values, Tnum one)
 where Tnum: INumber<Tnum>{
     var d = new Dictionary<T, Tnum>();
@@ -52,7 +54,7 @@ record LongPoint(BigInteger X, BigInteger Y)
     public static implicit operator (BigInteger, BigInteger)(LongPoint p) => (p.X, p.Y);
 }
 
-record Point(int X, int Y)
+record struct Point(int X, int Y)
 {
     public static Point operator +(Point p, (int, int) dir)
         => new(p.X + dir.Item1, p.Y + dir.Item2);
