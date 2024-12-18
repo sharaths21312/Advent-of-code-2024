@@ -13,6 +13,8 @@ using (var file = new StreamReader("./inputs/day18.txt")) {
 }
 bool[,] field = new bool[71, 71];
 
+var t = DateTime.Now;
+
 for (int i = 0; i < 1024; i++) {
     var pt = bytedata[i];
     field[pt.X, pt.Y] = true;
@@ -26,14 +28,19 @@ PriorityQueue<(Point, int), int> Path = new();
 Path.Enqueue((new(0, 0), 0), 0);
 HashSet<Point> visited = [];
 
+WriteLine(DateTime.Now.Subtract(t).TotalMilliseconds);
+t = DateTime.Now;
+
 // Solving part 1
 WriteLine(PathFind(field));
+WriteLine(DateTime.Now.Subtract(t).TotalMilliseconds);
+t = DateTime.Now;
 
 // Part 2, resetting field
-field = new bool[71, 71];
+// field = new bool[71, 71];
 Point failure;
 
-foreach (var coord in bytedata) {
+foreach (var coord in bytedata.Skip(1024)) {
     field[coord.X, coord.Y] = true;
     if (PathFind(field) == -1) {
         failure = coord;
@@ -41,6 +48,7 @@ foreach (var coord in bytedata) {
     }
 }
 WriteLine(failure);
+WriteLine(DateTime.Now.Subtract(t).TotalMilliseconds);
 
 int PathFind(bool[,] field) {
     PriorityQueue<(Point, int), int> Path = new();
