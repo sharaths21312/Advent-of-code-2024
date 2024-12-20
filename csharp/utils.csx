@@ -81,9 +81,10 @@ record struct Point(int X, int Y)
     public static implicit operator (int, int)(Point p) => (p.X, p.Y);
 
     public override string ToString() => $"X: {X}, Y: {Y}";
+    public int Distance(Point p) => Math.Abs(p.X - this.X) + Math.Abs(p.Y - this.Y);
 }
 
-static class Directions {
+static class Dirs {
     public static Point UP = new(0, -1);
     public static Point DOWN = new(0, 1);
     public static Point LEFT = new(-1, 0);
