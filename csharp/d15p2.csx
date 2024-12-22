@@ -84,7 +84,7 @@ void IterateGrid(Moves m) {
         Moves.UP => (0, -1),
         Moves.DOWN => (0, 1),
         Moves.LEFT => (-1, 0),
-        Moves.RIGHT => (1, 0)
+        _ => (1, 0)
     };
     if (!CheckMove(robot + dir, dir)) return;
     if (GetGrid(robot + dir) != Locations.EMPTY) {

@@ -12,7 +12,7 @@ Point end;
 
 Locations SetStart(int x, int y) {
     startpos = new(x, y);
-    queue.Enqueue((startpos, Directions.RIGHT, 0), 0);
+    queue.Enqueue((startpos, Dirs.RIGHT, 0), 0);
     return Locations.EMPTY;
 }
 // Locations SetEnd(int x, int y) {
@@ -85,7 +85,7 @@ t = DateTime.Now;
 // Part 2
 PriorityQueue<(Point, Point, HashSet<Point>, long), long> p2queue = new();
 
-p2queue.Enqueue((startpos, Directions.RIGHT, [startpos], 0), 0); 
+p2queue.Enqueue((startpos, Dirs.RIGHT, [startpos], 0), 0); 
 Dictionary<(Point, Point), int> visitedp2 = [];
 List<(Point, Point, HashSet<Point>, long)> solutionp2 = [];
 count = 0;

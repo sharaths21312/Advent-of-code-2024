@@ -30,57 +30,47 @@ WriteLine(GetMsTime(t));
 long Solve(int n) {
     return pathArr.Index().AsParallel().Sum(ikv => {
         var (idx, (p1, d1)) = ikv;
-        var remaining = pathArr.AsSpan(idx + 1);
-        long res = 0;
-        foreach (var (p2, d2) in remaining) {
+        return pathArr.Skip(idx).Count(kv2 => {
+            var (p2, d2) = kv2;
             var dist = p1.Distance(p2);
-            if (dist <= n) {
-                if (d2 - d1 >= 100 + dist) {
-                    res++;
-                }
-            }
-        }
-        return res;
+            return dist <= n && d2 - d1 >= 100 + dist;
+        });
     });
 }
 
 
 (int, Dictionary<Point, int>) GenPath() {
-    PriorityQueue<(Point, Dictionary<Point, int>, int), int> Path = new();
+    PriorityQueue<(Point, int), int> Path = new();
     Dictionary<Point, int> visited = [];
     HashSet<Point> prevVisited = [];
     visited.Add(start, 0);
 
-    Path.Enqueue((start, visited, 0), 0);
+    Path.Enqueue((start, 0), 0);
     
     while (Path.Count > 0) {
-        var (p, dict, dist) = Path.Dequeue();
+        var (p, dist) = Path.Dequeue();
         if (prevVisited.Contains(p)) continue;
         prevVisited.Add(p);
-        if (dict.ContainsKey(p)) {
-            dict[p] = Math.Min(dict[p], dist);
+        if (visited.ContainsKey(p)) {
+            visited[p] = Math.Min(visited[p], dist);
         } else {
-            dict.Add(p, dist);
+            visited.Add(p, dist);
         }
         if (p == end) {
-            return (dist, dict);
+            return (dist, visited);
         }
         
-        if (GetPos(p.Left) == Locs.EMPTY && !dict.ContainsKey(p.Left)) {
-            var d = dict.ToDictionary();
-            Path.Enqueue((p.Left, d, dist+1), dist+1);
+        if (GetPos(p.Left) == Locs.EMPTY && !visited.ContainsKey(p.Left)) {
+            Path.Enqueue((p.Left, dist+1), dist+1);
         }
-        if (GetPos(p.Right) == Locs.EMPTY && !dict.ContainsKey(p.Right)) {
-            var d = dict.ToDictionary();
-            Path.Enqueue((p.Right, d, dist+1), dist+1);
+        if (GetPos(p.Right) == Locs.EMPTY && !visited.ContainsKey(p.Right)) {
+            Path.Enqueue((p.Right, dist+1), dist+1);
         }
-        if (GetPos(p.Down) == Locs.EMPTY && !dict.ContainsKey(p.Down)) {
-            var d = dict.ToDictionary();
-            Path.Enqueue((p.Down, d, dist+1), dist+1);
+        if (GetPos(p.Down) == Locs.EMPTY && !visited.ContainsKey(p.Down)) {
+            Path.Enqueue((p.Down, dist+1), dist+1);
         }
-        if (GetPos(p.Up) == Locs.EMPTY && !dict.ContainsKey(p.Up)) {
-            var d = dict.ToDictionary();
-            Path.Enqueue((p.Up, d, dist+1), dist+1);
+        if (GetPos(p.Up) == Locs.EMPTY && !visited.ContainsKey(p.Up)) {
+            Path.Enqueue((p.Up, dist+1), dist+1);
         }
     }
     return (-1, []);
