@@ -11,6 +11,9 @@ where Tnum: INumber<Tnum> {
 
 double GetMsTime(DateTime t) => DateTime.Now.Subtract(t).TotalMilliseconds;
 
+bool IsSubset<T>(IEnumerable<T> Super, IEnumerable<T> Sub)
+    => !Sub.Except(Super).Any();
+
 Dictionary<T, Tnum> CountDict<T, Tnum>(IEnumerable<T> values, Tnum one)
 where Tnum: INumber<Tnum>{
     var d = new Dictionary<T, Tnum>();
