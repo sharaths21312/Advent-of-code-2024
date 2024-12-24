@@ -24,22 +24,15 @@ using (var file = new StreamReader("./inputs/day23.txt")) {
     }
 }
 
-HashSet<Connection> TripleSets = [];
 var t = DateTime.Now;
+WriteLine((from fst in Connections.Keys
+            from snd in Connections[fst].Index()
+            from thr in Connections[fst].Index()
+            where Connections[snd.Item].Contains(thr.Item)
+            where snd.Index < thr.Index
+            select new Connection([fst, snd.Item, thr.Item]))
+            .Distinct().Count(conn => conn.StartsT()));
 
-foreach (var fst in Connections) {
-    var pairs = from item1 in fst.Value.Index()
-                from item2 in fst.Value.Index()
-                where item1.Index < item2.Index
-                select (item1.Item, item2.Item);
-    foreach (var (snd, thr) in pairs) {
-        if (Connections[snd].Contains(thr)) {
-            TripleSets.Add(new([fst.Key, snd, thr]));
-        }
-    }
-}
-
-WriteLine(TripleSets.Count(c => c.StartsT()));
 strset MaxSet = [];
 BK([], new(AllPoints), []);
 WriteLine(String.Join(',', MaxSet.Order()));
@@ -49,7 +42,7 @@ WriteLine(GetMsTime(t));
 void BK(strset R, strset P, strset X) {
     if (P.Count == 0 && X.Count == 0) {
         if (R.Count > MaxSet.Count) {
-            MaxSet = R.ToHashSet();
+            MaxSet = [.. R];
         }
     }
     while (P.Count > 0) {
@@ -76,6 +69,6 @@ record class Connection {
         thr = l[2];
     }
 
-    public bool Contains(string inp) => inp == fst || inp == snd || inp == thr;
-    public bool StartsT() => fst.StartsWith('t') || snd.StartsWith('t') || thr.StartsWith('t');
+    public bool StartsT() => fst.StartsWith('t') ||
+        snd.StartsWith('t') || thr.StartsWith('t');
 };
