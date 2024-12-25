@@ -25,6 +25,18 @@ where Tnum: INumber<Tnum>{
     return d;
 }
 
+public static IEnumerable<IEnumerable<T>> Transpose<T>(
+    this IEnumerable<IEnumerable<T>> @this) 
+{
+    var enumerators = @this.Select(t => t.GetEnumerator())
+                           .Where(e => e.MoveNext());
+
+    while (enumerators.Any()) {
+        yield return enumerators.Select(e => e.Current);
+        enumerators = enumerators.Where(e => e.MoveNext());
+    }
+}
+
 public static void AddToValList<Tkey, Tlist>(this Dictionary<Tkey, List<Tlist>> dict, Tkey key, Tlist item) {
     if (dict.ContainsKey(key)) {
         dict[key].Add(item);
